@@ -39,21 +39,24 @@ public class H3_1 {
 					min = score;
 					HWScores.add(score);
 				} else {
-					newScores.add(new BasicDBObject("type", type));
-					newScores.add(new BasicDBObject("score", score));
+					BasicDBObject obj2 = new BasicDBObject();
+					obj2.append("type", type);
+					obj2.append("score", score);
+					newScores.add(obj2);
 				}
 			}
 			HWScores.remove(min);
 			for (Double score : HWScores) {
-				newScores.add(new BasicDBObject("type","homework"));
-				newScores.add(new BasicDBObject("score",score));
+				newScores.add(new BasicDBObject("type", "homework"));
+				newScores.add(new BasicDBObject("score", score));
 
 			}
-			collection.update(
-					new BasicDBObject().append("_id", student.get("_id")),
-					new BasicDBObject().append("name", student.get("name")).append("scores", (newScores)));
+			collection.update(new BasicDBObject().append("_id",
+					student.get("_id")),
+					new BasicDBObject().append("name", student.get("name"))
+							.append("scores", (newScores)));
 		}
-		
+
 		students = collection.find();
 	}
 
